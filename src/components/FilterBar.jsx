@@ -1,34 +1,3 @@
-// import React from 'react';
-
-// const FilterBar = () => {
-//   return (
-//     <div className="filter-bar">
-//       <div className="filter-sort">
-//         <label>Sort By:</label>
-//         <select>
-//           <option value="all">-- Select to sort --</option>
-//           <option value="price-high">Price: high to low</option>
-//           <option value="price-low">Price: low to high</option>
-//           <option value="name-a">Name: A to Z</option>
-//           <option value="name-z">Name: Z to A</option>
-//           <option value="raiting-high">Raiting: High to Low</option>
-//           <option value="raiting-low">Raiting: Low to High</option>
-//         </select>
-//       </div>
-
-//       <div className="filter-buttons">
-//         <button>All</button>
-//         <button>Veg</button>
-//         <button>Non Veg</button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FilterBar;
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 import React from 'react';
 
 const FilterBar = ({ filter, sortBy, onFilterChange, onSortChange }) => {
