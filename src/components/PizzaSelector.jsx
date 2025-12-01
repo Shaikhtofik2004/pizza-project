@@ -1,60 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const PizzaSelector = () => {
+const PizzaSelector = ({ pizza, addToCart, closePopup }) => {
+  const [size, setSize] = useState('');
+  const [toppings, setToppings] = useState([]);
+  const [error, setError] = useState('');
+
+  const toggleTopping = (t) => {
+    setToppings((prev) =>
+      prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]
+    );
+  };
+
+  const handleAdd = () => {
+    if (size === '' || toppings.length === 0) {
+      setError('Please select Size and at least 1 Topping.');
+      return;
+    }
+
+    setError('');
+
+    addToCart({
+      ...pizza,
+      size,
+      toppings,
+    });
+
+    closePopup();
+  };
+
   return (
     <div className="popup-overlay">
       <div className="popup">
-        <span className="popup-close-icon">&times;</span>
+        <span className="popup-close-icon" onClick={closePopup}>
+          &times;
+        </span>
 
-        <h2 className="popup-title">Margherita</h2>
+        <h2 className="popup-title">{pizza.name}</h2>
 
         <div className="popup-content">
           <div className="popup-left">
-            <h3 className="section-heading">Size</h3>
+            <h3>Size</h3>
             <hr />
 
             <div className="options-list">
-              <label className="option-item">
-                <input type="radio" name="size" value="Small" />
-                Small
-              </label>
-
-              <label className="option-item">
-                <input type="radio" name="size" value="Medium" />
-                Medium
-              </label>
-
-              <label className="option-item">
-                <input type="radio" name="size" value="Large" />
-                Large
-              </label>
+              {['Small', 'Medium', 'Large'].map((s) => (
+                <label className="option-item" key={s}>
+                  <input
+                    type="radio"
+                    name="size"
+                    value={s}
+                    onChange={() => setSize(s)}
+                  />
+                  {s}
+                </label>
+              ))}
             </div>
           </div>
 
           <div className="popup-right">
-            <h3 className="section-heading">Toppings</h3>
+            <h3>Toppings</h3>
             <hr />
 
             <div className="options-list">
-              <label className="option-item">
-                <input type="checkbox" value="Tomato Sauce" />
-                Tomato Sauce
-              </label>
-
-              <label className="option-item">
-                <input type="checkbox" value="Mozzarella Cheese" />
-                Mozzarella Cheese
-              </label>
-
-              <label className="option-item">
-                <input type="checkbox" value="Basil" />
-                Basil
-              </label>
+              {['Tomato Sauce', 'Mozzarella Cheese', 'Basil'].map((t) => (
+                <label className="option-item" key={t}>
+                  <input
+                    type="checkbox"
+                    value={t}
+                    onChange={() => toggleTopping(t)}
+                  />
+                  {t}
+                </label>
+              ))}
             </div>
           </div>
         </div>
 
-        <button className="popup-add-button">Add to cart</button>
+        {error && (
+          <p className="error-msg" style={{ color: 'red', marginTop: '10px' }}>
+            {error}
+          </p>
+        )}
+
+        <button className="popup-add-button" onClick={handleAdd}>
+          Add to cart
+        </button>
       </div>
     </div>
   );

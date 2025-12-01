@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './Card';
 
-const CardList = ({ items = [] }) => {
+const CardList = ({ items = [], openPopup, cart, setCart }) => {
   return (
     <div className="pizza-cards-container">
       <div className="cards-wrapper">
@@ -9,13 +9,10 @@ const CardList = ({ items = [] }) => {
           items.map((item) => (
             <Card
               key={item.id}
-              id={item.id}
-              name={item.name}
-              price={item.price}
-              isVeg={item.isVeg}
-              rating={item.rating}
-              img_url={item.img_url}
-              description={item.description}
+              {...item}
+              openPopup={openPopup}
+              cart={cart}
+              setCart={setCart}
             />
           ))
         ) : (
